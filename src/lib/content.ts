@@ -9,12 +9,15 @@ export const site = {
   instagramUrl: "https://www.instagram.com/miyagraphicsandprint/",
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=4207+Queens+Blvd+Sunnyside+NY+11104",
+  mapEmbedUrl:
+    "https://maps.google.com/maps?q=4207%20Queens%20Blvd%2C%20Sunnyside%2C%20NY%2011104&z=16&output=embed",
 };
 
 export const navItems = [
   { label: "Services", href: "#services" },
   { label: "Work", href: "#work" },
   { label: "Visit", href: "#visit" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export const services = [

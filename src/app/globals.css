@@ -293,6 +293,7 @@ a {
 .service-card {
   background: var(--ink);
   color: var(--paper);
+  height: 100%;
   min-height: 23rem;
   overflow: hidden;
   padding: 1.6rem;
@@ -392,6 +393,10 @@ a {
   position: relative;
 }
 
+.sample-reveal {
+  position: absolute;
+}
+
 .sample-poster,
 .sample-card,
 .sample-canvas {
@@ -399,14 +404,27 @@ a {
   position: absolute;
 }
 
+.sample-reveal > .sample-poster,
+.sample-reveal > .sample-card,
+.sample-reveal > .sample-canvas {
+  inset: auto;
+  left: auto;
+  position: static;
+  right: auto;
+  top: auto;
+}
+
+.sample-poster-reveal {
+  left: 12%;
+  top: 7%;
+  transform: rotate(-6deg);
+}
+
 .sample-poster {
   background: var(--paper);
   color: var(--ink);
   height: 26rem;
-  left: 12%;
   padding: 2rem;
-  top: 7%;
-  transform: rotate(-6deg);
   width: min(18rem, 50vw);
 }
 
@@ -442,20 +460,35 @@ a {
   height: 8.2rem;
   place-items: end start;
   padding: 1rem;
-  right: 11%;
   width: min(17rem, 48vw);
+}
+
+.sample-card-reveal {
+  right: 11%;
 }
 
 .cyan-card {
   background: var(--cyan);
+}
+
+.cyan-card-reveal {
   top: 13%;
   transform: rotate(5deg);
 }
 
 .magenta-card {
   background: var(--magenta);
+}
+
+.magenta-card-reveal {
   top: 40%;
   transform: rotate(-3deg);
+}
+
+.sample-canvas-reveal {
+  bottom: 4%;
+  left: 35%;
+  transform: rotate(4deg);
 }
 
 .sample-canvas {
@@ -469,11 +502,105 @@ a {
   font-size: 1.7rem;
   font-weight: 1000;
   height: 11rem;
-  left: 35%;
   padding: 1rem;
   place-items: end start;
-  transform: rotate(4deg);
   width: min(19rem, 54vw);
+}
+
+.map-card {
+  border: 1px solid rgb(7 9 12 / 0.2);
+  background: var(--ink);
+  box-shadow: 12px 12px 0 rgb(255 77 166 / 0.86);
+  min-height: 22rem;
+  overflow: hidden;
+  padding: 0.6rem;
+}
+
+.map-card iframe {
+  border: 0;
+  display: block;
+  height: 21rem;
+  width: 100%;
+}
+
+.contact-card {
+  background: var(--ink);
+  color: var(--paper);
+  min-height: 22rem;
+  padding: 1.6rem;
+}
+
+.contact-card h3 {
+  font-size: clamp(2.3rem, 5vw, 4.25rem);
+  font-weight: 1000;
+  letter-spacing: -0.07em;
+  line-height: 0.88;
+  margin-top: 4rem;
+}
+
+.contact-card p:last-of-type {
+  color: rgb(245 240 231 / 0.68);
+  line-height: 1.75;
+  margin-top: 1.4rem;
+}
+
+.contact-card-dark {
+  background: #121821;
+  box-shadow: 10px 10px 0 var(--cyan);
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px) scale(0.98);
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.sample-reveal.reveal-on-scroll {
+  opacity: 0;
+}
+
+.sample-reveal.reveal-on-scroll.is-visible {
+  opacity: 1;
+}
+
+.sample-poster-reveal.reveal-on-scroll {
+  transform: translateY(28px) scale(0.98) rotate(-6deg);
+}
+
+.sample-poster-reveal.reveal-on-scroll.is-visible {
+  transform: translateY(0) scale(1) rotate(-6deg);
+}
+
+.cyan-card-reveal.reveal-on-scroll {
+  transform: translateY(28px) scale(0.98) rotate(5deg);
+}
+
+.cyan-card-reveal.reveal-on-scroll.is-visible {
+  transform: translateY(0) scale(1) rotate(5deg);
+}
+
+.magenta-card-reveal.reveal-on-scroll {
+  transform: translateY(28px) scale(0.98) rotate(-3deg);
+}
+
+.magenta-card-reveal.reveal-on-scroll.is-visible {
+  transform: translateY(0) scale(1) rotate(-3deg);
+}
+
+.sample-canvas-reveal.reveal-on-scroll {
+  transform: translateY(28px) scale(0.98) rotate(4deg);
+}
+
+.sample-canvas-reveal.reveal-on-scroll.is-visible {
+  transform: translateY(0) scale(1) rotate(4deg);
 }
 
 @media (max-width: 720px) {
@@ -508,14 +635,43 @@ a {
   }
 
   .sample-poster {
+    width: min(18rem, 58vw);
+  }
+
+  .sample-poster-reveal {
     left: 4%;
   }
 
-  .sample-card {
+  .sample-card-reveal {
     right: 2%;
   }
 
-  .sample-canvas {
+  .sample-canvas-reveal {
     left: 20%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .ticker-track {
+    animation: none;
+  }
+
+  .reveal-on-scroll,
+  .reveal-on-scroll.is-visible,
+  .sample-poster-reveal.reveal-on-scroll,
+  .sample-poster-reveal.reveal-on-scroll.is-visible,
+  .cyan-card-reveal.reveal-on-scroll,
+  .cyan-card-reveal.reveal-on-scroll.is-visible,
+  .magenta-card-reveal.reveal-on-scroll,
+  .magenta-card-reveal.reveal-on-scroll.is-visible,
+  .sample-canvas-reveal.reveal-on-scroll,
+  .sample-canvas-reveal.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

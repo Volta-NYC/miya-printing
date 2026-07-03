@@ -1,4 +1,5 @@
 import { ColorStrip, HeroPrintStack } from "@/components/print-visuals";
+import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { process, proofPoints, services, site } from "@/lib/content";
@@ -68,11 +69,13 @@ export default function Home() {
 
             <div className="mt-12 grid gap-5 md:grid-cols-3">
               {services.map((service, index) => (
-                <article className={`service-card accent-${service.accent}`} key={service.title}>
-                  <p className="service-number">0{index + 1}</p>
-                  <h3>{service.title}</h3>
-                  <p>{service.text}</p>
-                </article>
+                <RevealOnScroll delay={index * 120} key={service.title}>
+                  <article className={`service-card accent-${service.accent}`}>
+                    <p className="service-number">0{index + 1}</p>
+                    <h3>{service.title}</h3>
+                    <p>{service.text}</p>
+                  </article>
+                </RevealOnScroll>
               ))}
             </div>
           </div>
@@ -92,15 +95,17 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="process-panel">
-              <ColorStrip />
-              {process.map((item, index) => (
-                <div className="process-row" key={item}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <p>{item}</p>
-                </div>
-              ))}
-            </div>
+            <RevealOnScroll>
+              <div className="process-panel">
+                <ColorStrip />
+                {process.map((item, index) => (
+                  <div className="process-row" key={item}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <p>{item}</p>
+                  </div>
+                ))}
+              </div>
+            </RevealOnScroll>
           </div>
         </section>
 
@@ -108,20 +113,31 @@ export default function Home() {
           <div className="grid lg:grid-cols-2">
             <div className="min-h-[34rem] bg-black p-4 sm:p-6 lg:p-8">
               <div className="sample-board">
-                <div className="sample-poster">
-                  <span>MENU</span>
-                  <b>Folded</b>
-                  <i />
-                </div>
-                <div className="sample-card cyan-card">
-                  <span>Business Cards</span>
-                </div>
-                <div className="sample-card magenta-card">
-                  <span>Stickers</span>
-                </div>
-                <div className="sample-canvas">
-                  <span>Canvas Prints</span>
-                </div>
+                <RevealOnScroll className="sample-reveal sample-poster-reveal">
+                  <div className="sample-poster">
+                    <span>MENU</span>
+                    <b>Folded</b>
+                    <i />
+                  </div>
+                </RevealOnScroll>
+                <RevealOnScroll className="sample-reveal sample-card-reveal cyan-card-reveal" delay={100}>
+                  <div className="sample-card cyan-card">
+                    <span>Business Cards</span>
+                  </div>
+                </RevealOnScroll>
+                <RevealOnScroll
+                  className="sample-reveal sample-card-reveal magenta-card-reveal"
+                  delay={180}
+                >
+                  <div className="sample-card magenta-card">
+                    <span>Stickers</span>
+                  </div>
+                </RevealOnScroll>
+                <RevealOnScroll className="sample-reveal sample-canvas-reveal" delay={260}>
+                  <div className="sample-canvas">
+                    <span>Canvas Prints</span>
+                  </div>
+                </RevealOnScroll>
               </div>
             </div>
             <div className="flex items-center px-4 py-20 sm:px-6 lg:px-16">
@@ -140,7 +156,7 @@ export default function Home() {
         </section>
 
         <section id="visit" className="bg-cyan px-4 py-20 text-ink sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.86fr_1fr] lg:items-center">
             <div>
               <p className="eyebrow text-ink/60">Visit</p>
               <h2 className="mt-4 max-w-3xl text-5xl font-black leading-[0.95] tracking-[-0.05em] sm:text-7xl">
@@ -150,14 +166,68 @@ export default function Home() {
                 {site.addressLine1}, {site.addressLine2}. Near the 7 train in Sunnyside, ready for
                 local pickup runs and custom print questions.
               </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a className="button button-dark" href={site.mapsUrl}>
+                  Get Directions
+                </a>
+                <a className="button button-dark-outline" href={site.instagramUrl}>
+                  Instagram
+                </a>
+              </div>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-              <a className="button button-dark" href={site.mapsUrl}>
-                Get Directions
-              </a>
-              <a className="button button-dark-outline" href={site.instagramUrl}>
-                Instagram
-              </a>
+
+            <RevealOnScroll>
+              <div className="map-card">
+                <iframe
+                  aria-label="Google Map showing Miya Graphics & Print at 42-07 Queens Blvd, Sunnyside, NY"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  src={site.mapEmbedUrl}
+                  title="Miya Graphics & Print location"
+                />
+              </div>
+            </RevealOnScroll>
+          </div>
+        </section>
+
+        <section id="contact" className="bg-paper px-4 py-20 text-ink sm:px-6 lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1fr] lg:items-start">
+            <div>
+              <p className="eyebrow text-magenta">Contact</p>
+              <h2 className="mt-4 max-w-2xl text-5xl font-black leading-[0.95] tracking-[-0.05em] sm:text-6xl">
+                Start with a file, a deadline, or a rough idea.
+              </h2>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-ink/68">
+                For quotes and quick questions, message Miya on Instagram or stop by the shop with
+                your print specs. Keep file size, quantity, paper choice, and pickup timing handy.
+              </p>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2">
+              <RevealOnScroll>
+                <article className="contact-card">
+                  <p className="eyebrow text-cyan">Message</p>
+                  <h3>Instagram DM</h3>
+                  <p>{site.instagram}</p>
+                  <a className="button button-bright mt-7" href={site.instagramUrl}>
+                    Open Instagram
+                  </a>
+                </article>
+              </RevealOnScroll>
+              <RevealOnScroll delay={120}>
+                <article className="contact-card contact-card-dark">
+                  <p className="eyebrow text-yellow">In Person</p>
+                  <h3>Visit the counter</h3>
+                  <p>
+                    {site.addressLine1}
+                    <br />
+                    {site.addressLine2}
+                  </p>
+                  <a className="button button-outline mt-7" href={site.mapsUrl}>
+                    Get Directions
+                  </a>
+                </article>
+              </RevealOnScroll>
             </div>
           </div>
         </section>
